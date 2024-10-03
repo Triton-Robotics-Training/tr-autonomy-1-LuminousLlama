@@ -9,6 +9,19 @@ class SpinSolution : public rclcpp::Node {
  public:
   SpinSolution();
  private:
+  std::array<double, 2> currentPose_;
+  std::array<double, 2> currentVel_;
+  std::chrono::time_point<std::chrono::system_clock> lastTime_;
+
+  rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::Publisher<ArrayMsg>::SharedPtr ppPublisher_;
+  rclcpp::Subscription<ArrayMsg>::SharedPtr mpSubscription_;
+  rclcpp::Subscription<ArrayMsg>::SharedPtr mvSubscription_;
+
+
+  void mpCallback(const ArrayMsg::SharedPtr msg);
+  void mvCallback(const ArrayMsg::SharedPtr msg);
+  void calculateAndPublishPose();
     // your code here
 };
 
